@@ -1,0 +1,16 @@
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\AiStudioApplication.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\domain\Message.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\domain\Session.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\Agent.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\CriticAgent.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\RunResult.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\RunStep.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\StepName.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\ThinkerAgent.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\pipeline\ValidatorAgent.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\service\PipelineService.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\service\SessionService.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\ApiError.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\ApiExceptionHandler.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\dto\Dtos.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\SessionController.java
