@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-init-session-table
+      author: artem
+      changes:
+        - createTable:
+            tableName: sessions
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(48)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_activity_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+      rollback:
+        - dropTable:
+            tableName: sessions
+
+  - changeSet:
+      id: 002-init-messages-table
+      author: artem
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: messages
+            baseColumnNames: session_id
+            referencedTableName: sessions
+            referencedColumnNames: id
+            constraintName: fk_message_session
+            onDelete: CASCADE
+
+      rollback:
+        - dropTable:
+            tableName: messages
+
+  - changeSet:
+      id: add-message-role-check
+      author: artem
+      changes:
+        - sql:
+            sql: |
+              ALTER TABLE messages
+              ADD CONSTRAINT chk_message_role
+              CHECK (role IN ('USER', 'AI'));
+      rollback:
+        - sql:
+            sql: |
+              ALTER TABLE messages
+              DROP CONSTRAINT chk_message_role;

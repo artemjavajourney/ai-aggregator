@@ -13,4 +13,5 @@ C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\ai
 C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\ApiError.java
 C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\ApiExceptionHandler.java
 C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\dto\Dtos.java
+C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\dto\request\RenameSessionRequest.java
 C:\Users\Kristina\IdeaProjects\ai\ai-studio-backend\src\main\java\com\example\aistudio\web\SessionController.java

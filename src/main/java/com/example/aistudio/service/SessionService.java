@@ -2,6 +2,9 @@ package com.example.aistudio.service;
 
 import com.example.aistudio.domain.Message;
 import com.example.aistudio.domain.Session;
+import com.example.aistudio.entity.SessionEntity;
+import com.example.aistudio.repository.MessageRepository;
+import com.example.aistudio.repository.SessionRepository;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +15,27 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class SessionService {
 
-    private final Map<String, Session> store = new ConcurrentHashMap<>();
+    private final SessionRepository sessionRepository;
+    private final MessageRepository messageRepository;
 
-    public List<Session> list() {
-        var sessions = new ArrayList<>(store.values());
-        sessions.sort(Comparator.comparing(Session::getLastActivityAt).reversed());
+    SessionService(SessionRepository sessionRepository, MessageRepository messageRepository) {
+        this.sessionRepository = sessionRepository;
+        this.messageRepository = messageRepository;
+    }
+
+    public List<SessionEntity> list() {
+        List<SessionEntity> sessions = sessionRepository.findAll();
+        sessions.sort(Comparator.comparing(SessionEntity::getLastActivityAt).reversed());
         return sessions;
     }
 
-    public Session create() {
-        String id = UUID.randomUUID().toString();
-        Instant now = Instant.now();
-        var session = new Session(id, "New session", now);
-        store.put(id, session);
-        return session;
+    public SessionEntity create() {
+        return sessionRepository.save(new SessionEntity("New session"));
     }
 
-    public Session getOrThrow(String id) {
-        var s = store.get(id);
-        if (s == null) {
+    public Optional<SessionEntity> getOrThrow(String id) {
+        var s = sessionRepository.findById(UUID.fromString(id));
+        if (s.isEmpty()) {
             throw new NotFoundException("SESSION_NOT_FOUND", "Session not found: " + id);
         }
         return s;
@@ -38,6 +43,7 @@ public class SessionService {
 
     public void addMessage(String sessionId, Message message) {
         var s = getOrThrow(sessionId);
+        messageRepository.
         s.getMessages().add(message);
         s.setLastActivityAt(Instant.now());
         if (s.getMessages().size() == 1 && message.getRole() == Message.Role.USER) {
@@ -45,14 +51,9 @@ public class SessionService {
         }
     }
 
-    private static String trimTo(String s, int max) {
-        var t = s.trim().replaceAll("\\s+", " ");
-        return t.length() <= max ? t : t.substring(0, max - 1) + "…";
-    }
-
-    public Session rename(String sessionId, @NotBlank String title) {
+    public Session rename(String sessionId, String title) {
         var s = getOrThrow(sessionId);
-        s.setTitle(trimTo(title, 48));
+        s.setTitle(normalizeTitle(title));
         s.setLastActivityAt(Instant.now());
         return s;
     }
@@ -60,6 +61,15 @@ public class SessionService {
     public void delete(String sessionId) {
         getOrThrow(sessionId);
         store.remove(sessionId);
+    }
+
+    private static String trimTo(String s, int max) {
+        var t = s.trim().replaceAll("\\s+", " ");
+        return t.length() <= max ? t : t.substring(0, max - 1) + "…";
+    }
+
+    private static String normalizeTitle(String title) {
+        return title.trim().replaceAll("\\s+", " ");
     }
 
     public static class NotFoundException extends RuntimeException {

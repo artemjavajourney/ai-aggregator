@@ -31,7 +31,7 @@ public class SessionController {
     public List<Dtos.SessionSummary> list() {
         return sessionService.list().stream()
                              .map(s -> new Dtos.SessionSummary(
-                                     s.getId(),
+                                     s.getId().toString(),
                                      s.getTitle(),
                                      s.getCreatedAt().toString(),
                                      s.getLastActivityAt().toString()
